@@ -1,0 +1,6 @@
+### Ignore data
+data/
+
+### Ignore cache
+detection_scripts/__pycache__/
+
