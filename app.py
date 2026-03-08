@@ -8,6 +8,9 @@ from PIL import Image
 import io
 import numpy as np
 import base64
+import matplotlib
+matplotlib.use('agg') 
+import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 
@@ -34,8 +37,13 @@ def predict():
     data = request.json
     image_data=data["image"]
     image_data = base64.b64decode(image_data.split(",")[1])
-    image = Image.open(io.BytesIO(image_data)).convert("L")  # Convertir en niveaux de gris
-    image = image.resize((28, 28))  # Redimensionner à 28x28
+    image = Image.open(io.BytesIO(image_data)).convert("L")  # Turn into grayscale
+    image = image.resize((28, 28)) 
+
+    # Invert the colors of the image to match the black background on MNIST dataset
+    img_array = np.array(image)
+    inverted_array = 255 - img_array
+    image = Image.fromarray(inverted_array.astype('uint8'))
 
     transform = torchvision.transforms.Compose([
         torchvision.transforms.ToTensor(),

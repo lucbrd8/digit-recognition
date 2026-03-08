@@ -4,7 +4,7 @@ training.py - Contains the training loop for the model
 
 import torch
 import torch.nn as nn
-from detection_model import BaseModel
+from detection_scripts.detection_model import BaseModel
 import config
 from data import train_loader, test_loader
 from tqdm import tqdm

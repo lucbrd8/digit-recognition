@@ -1,4 +1,6 @@
-import config,detection_model,data
+import detection_scripts.config as config
+import detection_scripts.detection_model as detection_model
+import detection_scripts.data as data
 import torch
 import torch.nn as nn
 import numpy as np
@@ -10,6 +12,7 @@ def predict_image(image: torch.tensor,model : nn.Module)->list[float]:
     From an image, this function returns a list of length 10 where list[i] contains the probability that the image is digit i
     """
     model,image=model.to(device),image.to(device)
+    model.eval()
     logits = model(image)
     probs = nn.functional.softmax(logits,dim=1).detach()
     return probs

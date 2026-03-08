@@ -10,8 +10,8 @@ path = './data'
 ### Training parameters
 
 learning_rate = 1e-3
-num_epochs = 15
-batch_size = 128
+num_epochs = 20
+batch_size = 256
 
 ### Device settings
 

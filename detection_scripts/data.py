@@ -3,7 +3,7 @@ data.py - Script to handle train and test dataloaders
 """
 
 
-import config
+import detection_scripts.config as config
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 import numpy as np
@@ -11,7 +11,10 @@ import matplotlib.pyplot as plt
 device = config.device
 
 transform = transforms.Compose([
-    transforms.ToTensor()
+    transforms.RandomRotation(10),  # Rotation aléatoire
+    transforms.RandomAffine(0, translate=(0.1, 0.1)),  # Translation aléatoire
+    transforms.ToTensor(),
+    transforms.Normalize((0.1307,), (0.3081,))
 ])
 
 ### Importing MNIST Dataset
@@ -31,6 +34,7 @@ def show_random_images():
     index = np.random.randint(0,len(train_dataset),10)
     for i_ax,i_img in enumerate(index) :
         image,label = train_dataset[i_img]
+        print(image)
         image = image.squeeze().numpy()
         axes[i_ax//5,i_ax%5].imshow(image, cmap='gray')
         axes[i_ax//5,i_ax%5].set_title(f"Label : {label}")
